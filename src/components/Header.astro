@@ -1,10 +1,13 @@
 ---
-const baseUrl = import.meta.env.BASE_URL;
+const basePath = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+const siteRoot = new URL(basePath, Astro.url);
+const homeHref = siteRoot.toString();
+const blogHref = new URL('blog/', siteRoot).toString();
 ---
 
 <header class="site-header">
 	<div class="page-section header-inner">
-		<a class="brand" href={baseUrl}>
+		<a class="brand" href={homeHref}>
 			<span class="brand-mark">⭐️</span>
 			<span class="brand-copy">
 				<strong>🐤P3A-DUCK's Veritable Records📔</strong>
@@ -13,8 +16,8 @@ const baseUrl = import.meta.env.BASE_URL;
 		</a>
 
 		<nav class="nav" aria-label="Main">
-			<a href={baseUrl}>Home</a>
-			<a href={`${baseUrl}blog/`}>Blog</a>
+			<a href={homeHref}>Home</a>
+			<a href={blogHref}>Blog</a>
 		</nav>
 	</div>
 </header>

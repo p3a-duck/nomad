@@ -6,7 +6,9 @@ interface Props {
 }
 
 const { post } = Astro.props;
-const baseUrl = import.meta.env.BASE_URL;
+const basePath = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+const siteRoot = new URL(basePath, Astro.url);
+const postHref = new URL(`blog/${post.id}/`, siteRoot).toString();
 const formattedDate = (post.data.updatedDate ?? post.data.pubDate).toLocaleDateString('ko-KR', {
 	year: 'numeric',
 	month: 'long',
@@ -17,7 +19,7 @@ const formattedDate = (post.data.updatedDate ?? post.data.pubDate).toLocaleDateS
 <article class="card post-card">
 	<p class="meta">{formattedDate}</p>
 	<h2>
-		<a href={`${baseUrl}blog/${post.id}/`}>{post.data.title}</a>
+		<a href={postHref}>{post.data.title}</a>
 	</h2>
 	<p class="description">{post.data.description}</p>
 	<div class="tags">

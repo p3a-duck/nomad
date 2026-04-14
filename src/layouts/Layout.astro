@@ -17,11 +17,12 @@ const {
 const siteTitle = 'Yu Blog';
 const pageTitle = title === siteTitle ? siteTitle : `${title} | ${siteTitle}`;
 const canonicalUrl = Astro.url;
-const baseUrl = import.meta.env.BASE_URL;
-const faviconSvg = `${baseUrl}favicon.svg`;
-const faviconIco = `${baseUrl}favicon.ico`;
-const backgroundImage = `url("${baseUrl}artemis2_moon.jpeg")`;
-const ogImage = new URL(`${baseUrl}og-default.svg`, Astro.site ?? canonicalUrl).toString();
+const basePath = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+const siteRoot = new URL(basePath, Astro.site ?? canonicalUrl);
+const faviconSvg = new URL('favicon.svg', siteRoot).toString();
+const faviconIco = new URL('favicon.ico', siteRoot).toString();
+const backgroundImage = `url("${new URL('artemis2_moon.jpeg', siteRoot).toString()}")`;
+const ogImage = new URL('og-default.svg', siteRoot).toString();
 ---
 
 <!doctype html>
