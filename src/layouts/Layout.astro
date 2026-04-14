@@ -1,0 +1,149 @@
+---
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+
+interface Props {
+	title?: string;
+	description?: string;
+	ogType?: 'website' | 'article';
+}
+
+const {
+	title = 'Yu Blog',
+	description = '개인 기술 실험과 개발 기록을 정리하는 Astro 기반 기술 블로그입니다.',
+	ogType = 'website',
+} = Astro.props;
+
+const siteTitle = 'Yu Blog';
+const pageTitle = title === siteTitle ? siteTitle : `${title} | ${siteTitle}`;
+const canonicalUrl = Astro.url;
+const ogImage = new URL('/og-default.svg', Astro.site ?? canonicalUrl).toString();
+---
+
+<!doctype html>
+<html lang="ko">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="icon" href="/favicon.ico" />
+		<link rel="canonical" href={canonicalUrl} />
+		<meta name="generator" content={Astro.generator} />
+		<meta name="description" content={description} />
+		<meta property="og:site_name" content={siteTitle} />
+		<meta property="og:type" content={ogType} />
+		<meta property="og:title" content={pageTitle} />
+		<meta property="og:description" content={description} />
+		<meta property="og:url" content={canonicalUrl} />
+		<meta property="og:image" content={ogImage} />
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:title" content={pageTitle} />
+		<meta name="twitter:description" content={description} />
+		<meta name="twitter:image" content={ogImage} />
+		<title>{pageTitle}</title>
+	</head>
+	<body>
+		<div class="shell">
+			<Header />
+			<main class="content">
+				<slot />
+			</main>
+			<Footer />
+		</div>
+	</body>
+</html>
+
+<style>
+	:root {
+		--bg: #060816;
+		--bg-accent:
+			linear-gradient(180deg, rgba(2, 6, 23, 0.42) 0%, rgba(3, 7, 18, 0.76) 60%, rgba(3, 7, 18, 0.92) 100%),
+			radial-gradient(circle at 22% 18%, rgba(91, 225, 255, 0.18), transparent 0 26%),
+			radial-gradient(circle at 82% 16%, rgba(196, 132, 252, 0.16), transparent 0 24%),
+			radial-gradient(circle at 62% 72%, rgba(255, 88, 194, 0.12), transparent 0 20%);
+		--surface: rgba(7, 11, 26, 0.58);
+		--surface-strong: rgba(13, 18, 38, 0.86);
+		--text: #f3f6ff;
+		--muted: #b4bdd8;
+		--line: rgba(182, 201, 255, 0.22);
+		--accent: #7ae7ff;
+		--accent-deep: #d7a8ff;
+		--max-width: 1120px;
+		--shadow: 0 28px 80px rgba(3, 5, 14, 0.44);
+	}
+
+	:global(html) {
+		font-family: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", serif;
+		background: var(--bg);
+		color: var(--text);
+	}
+
+	:global(body) {
+		margin: 0;
+		min-width: 320px;
+		background: var(--bg-accent);
+		background-image:
+			linear-gradient(180deg, rgba(3, 7, 18, 0.22) 0%, rgba(3, 7, 18, 0.54) 55%, rgba(3, 7, 18, 0.82) 100%),
+			radial-gradient(circle at 20% 16%, rgba(255, 255, 255, 0.24), transparent 0 12%),
+			radial-gradient(circle at 78% 22%, rgba(255, 255, 255, 0.18), transparent 0 11%),
+			url('/artemis2_moon.jpeg'),
+			var(--bg-accent);
+		background-size: cover, cover, cover, 95%, cover;
+		background-position: center, 20% 16%, 78% 22%, center center, center;
+		background-repeat: no-repeat;
+		color: var(--text);
+		background-attachment: fixed;
+	}
+
+	:global(a) {
+		color: inherit;
+	}
+
+	:global(*) {
+		box-sizing: border-box;
+	}
+
+	:global(.page-section) {
+		width: min(calc(100% - 2rem), var(--max-width));
+		margin: 0 auto;
+	}
+
+	.shell {
+		min-height: 100vh;
+		display: flex;
+		flex-direction: column;
+	}
+
+	.content {
+		flex: 1;
+		padding: 0 0 4rem;
+	}
+	
+	:global(.eyebrow) {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.5rem;
+		padding: 0.35rem 0.8rem;
+		border-radius: 999px;
+		background: rgba(122, 231, 255, 0.1);
+		color: var(--accent);
+		font-size: 0.78rem;
+		font-weight: 700;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+	}
+
+	:global(.card) {
+		background: var(--surface);
+		border: 1px solid var(--line);
+		border-radius: 28px;
+		box-shadow: var(--shadow);
+		backdrop-filter: blur(10px);
+	}
+	
+	@media (max-width: 720px) {
+		.content {
+			padding-bottom: 3rem;
+		}
+	}
+</style>

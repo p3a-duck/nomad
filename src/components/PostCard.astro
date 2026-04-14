@@ -1,0 +1,70 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+	post: CollectionEntry<'posts'>;
+}
+
+const { post } = Astro.props;
+const formattedDate = (post.data.updatedDate ?? post.data.pubDate).toLocaleDateString('ko-KR', {
+	year: 'numeric',
+	month: 'long',
+	day: 'numeric',
+});
+---
+
+<article class="card post-card">
+	<p class="meta">{formattedDate}</p>
+	<h2>
+		<a href={`/blog/${post.id}/`}>{post.data.title}</a>
+	</h2>
+	<p class="description">{post.data.description}</p>
+	<div class="tags">
+		{post.data.tags.map((tag) => (
+			<span>{tag}</span>
+		))}
+	</div>
+</article>
+
+<style>
+	.post-card {
+		padding: 1.6rem;
+		height: 100%;
+	}
+
+	.meta {
+		margin: 0 0 0.8rem;
+		color: var(--muted);
+		font-size: 0.88rem;
+	}
+
+	h2 {
+		margin: 0 0 0.8rem;
+		font-size: clamp(1.45rem, 2vw, 1.8rem);
+		line-height: 1.1;
+	}
+
+	h2 a {
+		text-decoration: none;
+	}
+
+	.description {
+		margin: 0 0 1rem;
+		color: var(--muted);
+		line-height: 1.7;
+	}
+
+	.tags {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.5rem;
+	}
+
+	.tags span {
+		padding: 0.28rem 0.62rem;
+		border-radius: 999px;
+		background: rgba(27, 26, 23, 0.06);
+		font-size: 0.82rem;
+		color: var(--muted);
+	}
+</style>

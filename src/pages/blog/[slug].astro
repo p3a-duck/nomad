@@ -1,0 +1,143 @@
+---
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+
+export async function getStaticPaths() {
+	const posts = await getCollection('posts', ({ data }) => !data.draft);
+
+	return posts.map((post) => ({
+		params: { slug: post.id },
+		props: { post },
+	}));
+}
+
+interface Props {
+	post: CollectionEntry<'posts'>;
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+const formattedDate = post.data.pubDate.toLocaleDateString('ko-KR', {
+	year: 'numeric',
+	month: 'long',
+	day: 'numeric',
+});
+---
+
+<Layout
+	title={post.data.title}
+	description={post.data.description}
+	ogType="article"
+>
+	<article class="page-section article-shell">
+		<a class="back-link" href="/blog">← 목록으로 돌아가기</a>
+		<header class="article-header">
+			<div class="article-topline">
+				<p class="eyebrow">Post</p>
+			</div>
+			<h1>{post.data.title}</h1>
+			<p class="lead">{post.data.description}</p>
+			<div class="meta-row">
+				<span>{formattedDate}</span>
+				<div class="tag-list">
+					{post.data.tags.map((tag) => (
+						<span>{tag}</span>
+					))}
+				</div>
+			</div>
+		</header>
+
+		<div class="card article-body">
+			<Content />
+		</div>
+	</article>
+</Layout>
+
+<style>
+	.article-shell {
+		padding: 2rem 0 0;
+	}
+
+	.back-link {
+		display: inline-block;
+		margin-bottom: 1.2rem;
+		color: var(--muted);
+		text-decoration: none;
+	}
+
+	.article-header {
+		margin-bottom: 1.5rem;
+	}
+
+	.article-topline {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 1rem;
+	}
+
+	h1 {
+		margin: 1rem 0 0.75rem;
+		font-size: clamp(1.4rem, 2.6vw, 2.5rem);
+		line-height: 0.95;
+		max-width: 18ch;
+	}
+
+	.lead {
+		margin: 0 0 1rem;
+		max-width: 46rem;
+		color: var(--muted);
+		font-size: 0.92rem;
+		line-height: 1.65;
+	}
+
+	.meta-row {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 1rem;
+		align-items: center;
+		color: var(--muted);
+	}
+
+	.tag-list {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.5rem;
+	}
+
+	.tag-list span {
+		padding: 0.28rem 0.62rem;
+		border-radius: 999px;
+		background: rgba(27, 26, 23, 0.06);
+		font-size: 0.82rem;
+	}
+
+	.article-body {
+		padding: clamp(1.4rem, 4vw, 3rem);
+	}
+
+	.article-body :global(p),
+	.article-body :global(li) {
+		color: #2f2c26;
+		font-size: 1.02rem;
+		line-height: 1.9;
+	}
+
+	.article-body :global(h2) {
+		margin-top: 2rem;
+		font-size: 1.7rem;
+	}
+
+	.article-body :global(img) {
+		display: block;
+		max-width: 100%;
+		height: auto;
+		margin: 1.2rem 0;
+		border-radius: 18px;
+	}
+
+	.article-body :global(ul),
+	.article-body :global(ol) {
+		padding-left: 1.2rem;
+	}
+</style>

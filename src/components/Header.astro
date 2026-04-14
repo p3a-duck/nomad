@@ -1,0 +1,94 @@
+<header class="site-header">
+	<div class="page-section header-inner">
+		<a class="brand" href="/">
+			<span class="brand-mark">⭐️</span>
+			<span class="brand-copy">
+				<strong>🐤P3A-DUCK's Veritable Records📔</strong>
+				<small></small>
+			</span>
+		</a>
+
+		<nav class="nav" aria-label="Main">
+			<a href="/">Home</a>
+			<a href="/blog">Blog</a>
+		</nav>
+	</div>
+</header>
+
+<style>
+	.site-header {
+		padding: 1.5rem 0 1rem;
+	}
+
+	.header-inner {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 1rem;
+	}
+
+	.brand {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.9rem;
+		text-decoration: none;
+	}
+
+	.brand-mark {
+		display: grid;
+		place-items: center;
+		width: 2.8rem;
+		height: 2.8rem;
+		border-radius: 1rem;
+		background: #1b1a17;
+		color: #fffaf2;
+		font-weight: 700;
+		font-size: 1.2rem;
+	}
+
+	.brand-copy {
+		display: flex;
+		flex-direction: column;
+	}
+
+	.brand-copy strong {
+		font-size: 1rem;
+	}
+
+	.brand-copy small {
+		color: var(--muted);
+		font-size: 0.82rem;
+	}
+
+	.nav {
+		display: flex;
+		align-items: center;
+		gap: 0.35rem;
+		padding: 0.3rem;
+		border: 1px solid var(--line);
+		border-radius: 999px;
+		background: rgba(255, 253, 248, 0.62);
+	}
+
+	.nav a {
+		padding: 0.6rem 1rem;
+		border-radius: 999px;
+		text-decoration: none;
+		color: var(--muted);
+		font-size: 0.95rem;
+	}
+
+	.nav a:hover,
+	.nav a:focus-visible {
+		background: rgba(198, 93, 46, 0.12);
+		color: var(--accent-deep);
+		outline: none;
+	}
+
+	@media (max-width: 720px) {
+		.header-inner {
+			flex-direction: column;
+			align-items: flex-start;
+		}
+	}
+</style>
