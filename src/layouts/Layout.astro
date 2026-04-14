@@ -17,7 +17,11 @@ const {
 const siteTitle = 'Yu Blog';
 const pageTitle = title === siteTitle ? siteTitle : `${title} | ${siteTitle}`;
 const canonicalUrl = Astro.url;
-const ogImage = new URL('/og-default.svg', Astro.site ?? canonicalUrl).toString();
+const baseUrl = import.meta.env.BASE_URL;
+const faviconSvg = `${baseUrl}favicon.svg`;
+const faviconIco = `${baseUrl}favicon.ico`;
+const backgroundImage = `url("${baseUrl}artemis2_moon.jpeg")`;
+const ogImage = new URL(`${baseUrl}og-default.svg`, Astro.site ?? canonicalUrl).toString();
 ---
 
 <!doctype html>
@@ -25,8 +29,8 @@ const ogImage = new URL('/og-default.svg', Astro.site ?? canonicalUrl).toString(
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
+		<link rel="icon" type="image/svg+xml" href={faviconSvg} />
+		<link rel="icon" href={faviconIco} />
 		<link rel="canonical" href={canonicalUrl} />
 		<meta name="generator" content={Astro.generator} />
 		<meta name="description" content={description} />
@@ -53,7 +57,7 @@ const ogImage = new URL('/og-default.svg', Astro.site ?? canonicalUrl).toString(
 	</body>
 </html>
 
-<style>
+<style define:vars={{ backgroundImage }}>
 	:root {
 		--bg: #060816;
 		--bg-accent:
@@ -86,7 +90,7 @@ const ogImage = new URL('/og-default.svg', Astro.site ?? canonicalUrl).toString(
 			linear-gradient(180deg, rgba(3, 7, 18, 0.22) 0%, rgba(3, 7, 18, 0.54) 55%, rgba(3, 7, 18, 0.82) 100%),
 			radial-gradient(circle at 20% 16%, rgba(255, 255, 255, 0.24), transparent 0 12%),
 			radial-gradient(circle at 78% 22%, rgba(255, 255, 255, 0.18), transparent 0 11%),
-			url('/artemis2_moon.jpeg'),
+			var(--backgroundImage),
 			var(--bg-accent);
 		background-size: cover, cover, cover, 95%, cover;
 		background-position: center, 20% 16%, 78% 22%, center center, center;

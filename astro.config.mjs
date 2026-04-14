@@ -3,6 +3,7 @@ import { defineConfig } from 'astro/config';
 
 // https://astro.build/config
 export default defineConfig({
-	site: 'https://example.com',
+	site: 'https://p3a-duck.github.io',
+	base: '/nomad',
 	output: 'static',
 });

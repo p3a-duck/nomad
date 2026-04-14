@@ -17,6 +17,7 @@ interface Props {
 
 const { post } = Astro.props;
 const { Content } = await render(post);
+const baseUrl = import.meta.env.BASE_URL;
 const formattedDate = post.data.pubDate.toLocaleDateString('ko-KR', {
 	year: 'numeric',
 	month: 'long',
@@ -30,7 +31,7 @@ const formattedDate = post.data.pubDate.toLocaleDateString('ko-KR', {
 	ogType="article"
 >
 	<article class="page-section article-shell">
-		<a class="back-link" href="/blog">← 목록으로 돌아가기</a>
+		<a class="back-link" href={`${baseUrl}blog/`}>← 목록으로 돌아가기</a>
 		<header class="article-header">
 			<div class="article-topline">
 				<p class="eyebrow">Post</p>
